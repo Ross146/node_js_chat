@@ -1,0 +1,10 @@
+<ul class="nav nav-tabs container">
+    <li role="presentation"><a href="/">Main page</a></li>
+    <li role="presentation">
+        <% if (!user) {%>
+        <a href="/login">Login</a>
+        <% } else {%>
+        <a href="#" onclick="$('<form method=POST action=/logout>').submit();return false">Log out</a>
+        <% }%>
+    </li>
+</ul>

@@ -1,0 +1,18 @@
+{
+  "name": "Node_js_chat",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.21.2",
+    "ejs": "*",
+    "winston": "*",
+    "ejs-locals": "*",
+    "nconf": "*",
+    "mongoose": "*",
+    "connect-mongo": "*",
+    "async": "*",
+    "socket.io": "*"
+  }
+}
