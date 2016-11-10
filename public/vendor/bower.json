@@ -1,0 +1,22 @@
+{
+  "name": "node_js_chat",
+  "homepage": "https://github.com/Ross146/node_js_chat",
+  "authors": [
+    "Ross146 <e.padalka@theomnicore.com>"
+  ],
+  "description": "",
+  "main": "app.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.1",
+    "socket.io-client": "^1.5.1"
+  }
+}
