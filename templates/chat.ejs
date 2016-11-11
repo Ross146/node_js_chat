@@ -5,7 +5,7 @@
 
 <p class="lead">будующий чат</p>
 
-<script src="/socket.io/socket.io.js"></script>
+<script src="/vendor/bower_components/socket.io-client/socket.io.js"></script>
 
 <div id="room">
     <ul></ul>
@@ -15,25 +15,48 @@
 </div>
 
 <script>
-    var socket = io.connect();
 
+    var input = $('#room input');
     var form = $('#room form');
     var ul = $('#room ul');
 
-    form.submit(function() {
-        var input = $(this).find(':input');
-        var text = input.val();
-        input.val('');
 
+    var socket = io.connect('' , {
+        'reconnection delay': 1
+    });
+
+    socket
+            .on('message', function (message) {
+                printMessage(message)
+            })
+            .on('connect', function () {
+                printStatus('Соединение установлено');
+                form.on('submit', sendMessage);
+                input.prop('disabled', false);
+            })
+            .on('connect_error', function () {
+                printStatus('Соединение потеряно');
+                form.off('submit', sendMessage);
+                input.prop('disabled', true);
+            })
+
+    function sendMessage () {
+        var text = input.val();
         socket.emit('message', text, function () {
-            $('<li>', {text: text}).appendTo(ul);
+            printMessage(text);
         });
 
+        input.val('');
         return false;
-    });
+    }
 
-    socket.on('message', function (text) {
-        $('<li>', {text: text}).appendTo(ul);
-    });
+    function printStatus(status) {
+        $('<li>').append($('<i>').text(status)).appendTo(ul);
+    }
+
+    function printMessage(message) {
+        $('<li>', {text: message}).appendTo(ul);
+    }
+
 
 </script>
