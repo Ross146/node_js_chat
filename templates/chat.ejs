@@ -5,7 +5,7 @@
 
 <p class="lead">будующий чат</p>
 
-<script src="/vendor/bower_components/socket.io-client/socket.io.js"></script>
+<script src="/vendor/bower_components/socket.io-client/socket.io.js" ></script>
 
 <div id="room">
     <ul></ul>
@@ -21,13 +21,17 @@
     var ul = $('#room ul');
 
 
-    var socket = io.connect('' , {
-        'reconnection delay': 1
-    });
+    var socket = io.connect({transports: ['websocket']});
 
     socket
-            .on('message', function (message) {
-                printMessage(message)
+            .on('message', function (username, message) {
+                printMessage(username + "> " + message);
+            })
+            .on('leave', function (username) {
+                printMessage(username + " вышел из чата");
+            })
+            .on('join', function (username) {
+                printMessage(username + " вошёл в чат");
             })
             .on('connect', function () {
                 printStatus('Соединение установлено');
@@ -38,7 +42,7 @@
                 printStatus('Соединение потеряно');
                 form.off('submit', sendMessage);
                 input.prop('disabled', true);
-            })
+            });
 
     function sendMessage () {
         var text = input.val();
